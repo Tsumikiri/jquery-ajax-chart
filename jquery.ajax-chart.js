@@ -1,7 +1,5 @@
 /**
- * @title AJAX Chart jQuery Plugin
  * @author Alex Furey
- * @date 10-aug-2016
  * @version 1.2.6
  */
 

@@ -1,8 +1,8 @@
 # jQuery Ajax Chart Plugin
 A jQuery-based wrapper for Google Charts loaded via ajax. Check out the [documentation](https://cdn.rawgit.com/tsumikiri/jquery-ajax-chart/master/index.html)!
 
-##What does it do?
-This plugin serves as a wrapper for the Google Charts Library. Use it to initialize Google Charts with familiar jQuery syntax.
+##What does it do for me?
+This plugin serves as a wrapper for the [Google Charts Library](https://developers.google.com/chart/). Use it to initialize Google Charts with familiar jQuery syntax.
 
-##Caveats
+##What do I have to do myself?
 You must create your own server-side implementation for serving Google Charts DataTables. Usually this involves a server-side scripting language like PHP or Python, some database queries, and a bit of data formatting.

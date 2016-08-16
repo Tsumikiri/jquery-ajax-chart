@@ -1,0 +1,28 @@
+0.0.1
+- Added the onExplore parameter to the init method
+0.0.2
+- Added the deep parameter to the update method
+0.1.2
+- Changed the update method to only change chart options
+- Added the refresh method with the same functionality as the old update method, except without the ability to change chart options
+0.2.2
+- Removed the following parameters from the init method: onceReady, onceSelect, onceLoad, onReady, onSelect, onLoad, onFail
+- Renamed onExport to exportHandler
+- Renamed onExplore to exploreHandler
+- Renamed dataFormat to dataHandler
+- Added the on and once parameters which are used to add listeners and one time listeners (respectively) to the underlying chart object
+1.2.2
+- Complete re-write (see documentation for available features)
+- Methods: init, update, load, draw, image, chart, wrapper
+- Removed several options and features that were outside the scope of this project and were cluttering things up too much
+- Renamed functions to $.achart(...) and $(...).achart(...)
+- The load method now returns a jqXHR object (allows chaining of .done(), .fail(), etc)
+- The init method no longer requires that the target element have an id attribute, one will be generated for it automatically if it doesn't have one
+1.2.3
+- Added the reload method
+1.2.4
+- Added an interface for chart events (select, ready, and error)
+1.2.5
+- Changed the reload method to allow partial changes of the last ajax request
+1.2.6
+- Added the select method

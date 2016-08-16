@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Ajax Chart</title>
+		<style>
+			* { box-sizing: border-box; }
+			body { padding: 0 10% 15px 10%; margin: 0; font-family: sans-serif; background-color: #aaaaaa; background: linear-gradient(#406196, #002c73); }
+			h1, h2, h3, h4, h5, h6 { color: #333333; margin-bottom: 0; }
+			h1 { font-size: 36px; color: #ffffff; padding-top: 60px; margin-top: 0; }
+			h2 { font-size: 30px; }
+			h3 { font-size: 24px; }
+			h4 { font-size: 18px; }
+			h5 { font-size: 16px; }
+			h5 { font-size: 14px; }
+			blockquote { font-style: italic; color: #ffffff; }
+			code, pre { color: #eeeeee; background-color: #717074; border-radius: 3px; }
+			pre { display: inline-block; padding: 5px; min-width: 40%; margin: 0; }
+			code { padding: 1px; }
+			.code { font-family: monospace; }
+			dt { font-weight: bold; }
+			table { width: 100%; border-collapse: collapse; }
+			thead>tr>th { text-align: left; width: 12%; }
+			thead>tr>th:last-child { width: 52%; }
+			tbody>tr { border-top: 1px solid #bbbbbb; }
+			td { vertical-align: top; padding-top: 5px; padding-bottom: 5px; }
+			th { vertical-align: bottom; padding-top: 5px; padding-bottom: 5px; }
+			body, td, th { font-size: 10pt; }
+			section { border: 1px solid #dddddd; border-radius: 6px; padding: 0 15px 30px 15px; margin-bottom: 30px; background-color: #dddddd; }
+			.section-content { padding-left: 15px; }
+			a { color: #4b8b2a; }
+			a:hover { text-decoration: none; }
+			header { margin-bottom: 30px; }
+			footer { text-align: center; color: #dddddd; font-size: 8pt; }
+			.container { padding-left: 15px; padding-right: 15px; }
+			.row { margin-left: -15px; margin-right: -15px; }
+			.row:after { clear: both; display: block; visibility: hidden; content: " "; }
+			.col { float: left; padding-left: 15px; padding-right: 15px; width: 100%; }
+			@media (min-width: 768px) {
+				.col { width: 50%; }
+			}
+			#go-to-top { position: fixed; bottom: 30px; right: 30px; display: inline-block; background-color: #5d963f; border-radius: 3px; padding: 5px; font-size: 9pt; text-decoration: none; color: white; }
+			#go-to-top:hover { background-color: #6fa255; }
+			#go-to-top:active { background-color: #4b8b2a; }
+		</style>
+	</head>
+	<body>
+		<a href="#top" id="go-to-top">Go to Top</a>
+		<div class="container">
+			<header>
+				<h1 id="top">jQuery Ajax Chart</h1>
+				<blockquote>The super simple way to use Google Charts with remote data - all wrapped up in an easy to use jQuery plugin.</blockquote>
+			</header>
+			<div class="row">
+				<div class="col">
+					<section>
+						<h2 id="index">Contents</h2>
+						<div class="section-content">
+							<ul>
+								<li><a href="#getting-started">Getting Started</a>
+									<ul>
+										<li><a href="#setup">Setup</a></li>
+										<li><a href="#on-load">On Load</a></li>
+										<li><a href="#server-side">Server-Side</a></li>
+									</ul>
+								</li>
+								<li><a href="#methods">Methods</a>
+									<ul>
+										<li><a href="#init" class="code">init</a>
+											<ul><li><a href="#example-chart-init">Example: Chart Initialization</a></li></ul>
+										</li>
+										<li><a href="#update" class="code">update</a>
+											<ul><li><a href="#example-interactive-styles">Example: Interactive Styles</a></li></ul>
+										</li>
+										<li><a href="#load" class="code">load</a>
+											<ul><li><a href="#example-using-jqxhr">Example: Using jqXHR</a></li></ul>
+										</li>
+										<li><a href="#reload" class="code">reload</a>
+											<ul><li><a href="#example-refresh-filter">Example: Refreshing and Filtering</a></li></ul>
+										</li>
+										<li><a href="#image" class="code">image</a>
+											<ul><li><a href="#example-export-as-image">Example: Export as Image</a></li></ul>
+										</li>
+										<li><a href="#draw" class="code">draw</a></li>
+										<li><a href="#chart" class="code">chart</a></li>
+										<li><a href="#wrapper" class="code">wrapper</a></li>
+									</ul>
+								</li>
+								<li><a href="#advanced">Advanced Usage</a>
+									<ul>
+										<li><a href="#events">Events</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+				</div>
+				<div class="col">
+					<section>
+						<h2 id="resources">Other Resources</h2>
+						<div class="section-content">
+							<ul>
+								<li><a href="https://developers.google.com/chart/">Google Charts Documentation</a>
+									<ul>
+										<li><a href="https://developers.google.com/chart/interactive/docs/gallery">Charts Gallery</a></li>
+										<li><a href="https://developers.google.com/chart/interactive/docs/reference">API Reference</a></li>
+										<li><a href="https://developers.google.com/chart/interactive/docs/reference#dataparam">DataTables Object Format</a></li>
+										<li><a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">ChartWrapper Class</a></li>
+										<li><a href="https://developers.google.com/chart/interactive/docs/events">Events</a>
+									</ul>
+								</li>
+								<li><a href="http://api.jquery.com/">jQuery Documentation</a>
+									<ul>
+										<li>
+											<a href="http://api.jquery.com/jquery.ajax/">jQuery Ajax Documentation</a>
+											<ul>
+												<li><a href="http://api.jquery.com/jQuery.ajax/#jqXHR">jqXHR Object</a></li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</section>
+				</div>
+			</div>
+			<section>
+				<h2 id="getting-started">Getting Started</h2>
+				<div class="section-content">
+					<h3 id="setup">Setup</h3>
+					<p>Simply include the JavaScript file after including jQuery and the Google Charts library.</p>
+					<pre>&lt;script src="jQuery.min.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript"&gt;&#10;    google.charts.load('current', {packages: ['corechart']});&#10;&lt;/script&gt;&#10;&lt;script src="jquery.ajax-chart.js"&gt;</pre>
+					<h3 id="on-load">On Load</h3>
+					<p>jQuery's normal on load event can sometimes fire before Google Charts is ready. To prevent this, use the <code>$.achart(...)</code> function.</p>
+					<pre>$.achart(function() {&#10;    //do chart initialization n stuff&#10;});</pre>
+					<h3 id="server-side">Server-Side</h3>
+					<p>You should have a script that returns a JSON object containing a valid Google Charts DataTable JSON object at the expected key (<code>'data'</code> by default). See the <a href="https://developers.google.com/chart/interactive/docs/reference#dataparam">Google Charts Documentation</a> for the exact structure of this object. Here's an example of JSON returned from a server-side script:</p>
+					<pre>{"data": {&#10;    "cols": [&#10;        { "label": "Dessert", "id": "dessert", "type": "string" },&#10;        { "label": "Count", "id": "count", "type": "number" }&#10;    ],&#10;    "rows": [&#10;        { "c": [ {"v": "Cake"}, {"v": 19} ] },&#10;        { "c": [ {"v": "Pie"}, {"v": 16} ] }&#10;    ]&#10;}}</pre>
+					<p>Feel free to add any extra data you want to the structure returned by your script. As long as the <code>'data'</code> key has a valid DataTable structure, you're good!</p>
+				</div>
+			</section>
+			<section>
+				<h2 id="methods">Methods</h2>
+				<p>Call methods like this: <code>$(containerSelector).achart(methodName, methodParameters);</code></p>
+				<p>Available methods are <code>'init'</code>, <code>'update'</code>, <code>'load'</code>, <code>'reload'</code>, <code>'draw'</code>, <code>'image'</code>, <code>'chart'</code>, and <code>'wrapper'</code>.
+				<div class="section-content">
+					<h3 id="init" class="code">init</h3>
+					<div class="section-content">
+						<p>Initializes an Ajax Chart.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('init', type, opts);</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('init', 'BarChart', { height: 250 });</code></dd>
+						</dl>
+						<h4>Parameters</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Default</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="code">type</td>
+									<td>String</td>
+									<td></td>
+									<td><code>'PieChart'</code></td>
+									<td>The type of chart to use. See the <a href="https://developers.google.com/chart/interactive/docs/reference#google.visualization.drawchart">Google Charts Documentation</a> for more information.</td>
+								</tr>
+								<tr>
+									<td class="code">opts</td>
+									<td>Object</td>
+									<td></td>
+									<td><code>{}</code></td>
+									<td>The chart options to use. Available options are based on the chart type. See the <a href="https://developers.google.com/chart/interactive/docs/reference#google.visualization.drawchart">Google Charts Documentation</a> for more information.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h4 id="example-chart-init">Example: Chart Initialization</h4>
+						<p>Let's initialize a donut chart!</p>
+						<pre>$('#my-container').achart('init', 'PieChart', {&#10;    pieHole: 0.4&#10;});</pre>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="update" class="code">update</h3>
+					<div class="section-content">
+						<p>Updates an Ajax Chart. Draws the chart only if the <code>'load'</code> method has already been called.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('update', opts);</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('update', { height: 250 });</code></dd>
+						</dl>
+						<h4>Parameters</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Default</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="code">opts</td>
+									<td>Object</td>
+									<td></td>
+									<td><code>{}</code></td>
+									<td>The chart options to use. Available options are based on the chart type. See the <a href="https://developers.google.com/chart/interactive/docs/reference#google.visualization.drawchart">Google Charts Documentation</a> for more information.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h4 id="example-interactive-styles">Example: Interactive Styles</h4>
+						<p>We can use this method to change our chart's appearance on the fly. In the below example, we use a button to make the 3 slices of our pie chart red. (Pretty useful, right?)</p>
+						<pre>$('#red-mode-btn').on('click', function() {&#10;    $('#my-container').achart('update', {&#10;        colors: [ 'red', 'red', 'red' ]&#10;    });&#10;});</pre>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="load" class="code">load</h3>
+					<div class="section-content">
+						<p>Loads the data for an Ajax Chart using an ajax call. Draws the chart when the response is received.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('load', ajax, expect);</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('load', { url: 'my-script.cgi' });</code></dd>
+						</dl>
+						<h4>Parameters</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Default</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="code">ajax</td>
+									<td>Object</td>
+									<td>Yes</td>
+									<td><code>{}</code></td>
+									<td>Options to use for the ajax call. See the <a href="http://api.jquery.com/jquery.ajax/">jQuery Documentation</a> for more information. Please note that that the <code>'load'</code> method forces <code>{ dataType: 'json' }</code>.</td>
+								</tr>
+								<tr>
+									<td class="code">expect</td>
+									<td>String</td>
+									<td></td>
+									<td><code>'data'</code></td>
+									<td>The key that will hold the new chart data in the JSON object returned by the server.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h4>Returns</h4>
+						<p>The jqXHR object created by the ajax call. You can use it to add listeners to the request, as shown in the next example.</p>
+						<h4 id="example-using-jqxhr">Example: Using jqXHR</h4>
+						<p>Here we leverage the jqXHR object returned by the <code>'load'</code> method to add a callback in case our ajax call fails:</p>
+						<pre>$('#my-container').achart('load', {&#10;    url: 'my-script.cgi'&#10;}).fail(function(xhr, status, error) {&#10;    alert('Oh snap! There was an error!');&#10;});</pre>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="reload" class="code">reload</h3>
+					<div class="section-content">
+						<p>Loads the data for an Ajax Chart using an ajax call, but with the same ajax options and expected key as the last call of the <code>'load'</code> or <code>'reload'</code> method. Draws the chart when the response is received.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('reload', ajax, expect);</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('reload');</code></dd>
+						</dl>
+						<h4>Parameters</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Default</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="code">ajax</td>
+									<td>Object</td>
+									<td></td>
+									<td></td>
+									<td>Options to change from the last ajax call. See the <a href="http://api.jquery.com/jquery.ajax/">jQuery Documentation</a> for more information. Please note that that the <code>'load'</code> method forces <code>{ dataType: 'json' }</code>.</td>
+								</tr>
+								<tr>
+									<td class="code">expect</td>
+									<td>String</td>
+									<td></td>
+									<td></td>
+									<td>The key that will hold the new chart data in the JSON object returned by the server. If this is left out, this will be the same as the last one that was passed.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h4>Returns</h4>
+						<p>The jqXHR object created by the ajax call. You can use it to add listeners to the request, as shown in the next example.</p>
+						<h4 id="example-refresh-filter">Example: Refreshing and Filtering</h4>
+						<p>In this example we will see how you can use the <code>'reload'</code> function to implement a "Refresh" button.</p>
+						<pre>$('#my-refresh-btn').on('click', function() {&#10;    $('#my-container').achart('reload');&#10;});</pre>
+						<p>The same idea can be expanded to create a simple filter interface, as shown here:</p>
+						<pre>$('#current-year-dropdown').on('change', function() {&#10;    var selectedYear = $(this).val();&#10;    $('#my-container').achart('reload', {&#10;        data: {&#10;            year: selectedYear&#10;        }&#10;    });&#10;});</pre>
+						<p>In the above code, we do an ajax request for the chart data every time our dropdown menu is changed. We pass in the selected year as a parameter so our server-side script knows which year's records it should select.</p>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="image" class="code">image</h3>
+					<div class="section-content">
+						<p>Use this method to get an image URI of the chart. Useful for exporting.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('image');</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('image');</code></dd>
+						</dl>
+						<h4>Returns</h4>
+						<p>The chart as an image URI.</p>
+						<h4 id="example-export-as-image">Example: Export as Image</h4>
+						<p>In this example we will use the <code>'image'</code> method to make an "Export as Image" button for our chart.</p>
+						<pre>$('#my-button').on('click', function() {&#10;    //for modern browsers&#10;    window.open($('#my-chart').achart('image'));&#10;    //for IE&#10;    window.open('', '_blank').document.write('&lt;img src="' + $('#my-chart').achart('image') + '" /&gt;');&#10;});</pre>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="draw" class="code">select</h3>
+					<div class="section-content">
+						<p>This method is used to get or set the chart's current selection. This works by interfacing with the Google Charts Library's <a href="https://developers.google.com/chart/interactive/docs/reference#getselection" class="code">.getSelection()</a> and <a href="https://developers.google.com/chart/interactive/docs/reference#setselection" class="code">.setSelection()</a> chart methods.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('select', selection);</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('select', [{ row: 1, column: null }]);</code></dd>
+						</dl>
+						<h4>Parameters</h4>
+						<table>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Default</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class="code">selection</td>
+									<td>String</td>
+									<td></td>
+									<td></td>
+									<td>A selection to apply to the chart. This is an array with the form: <code>[ { row: ROWNUMBER, column: COLNUMBER }, ... ]</code>.</td>
+								</tr>
+							</tbody>
+						</table>
+						<h4>Returns</h4>
+						<p>The current chart selection. If a new selection was passed, returns that selection.</p>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="draw" class="code">draw</h3>
+					<div class="section-content">
+						<p>Draws the chart. You usually won't have to call this method explicitly, because it's called automatically by the following Ajax Chart methods: <code>'update'</code> (if the chart has data), <code>'load'</code> (when the response is received), and <code>'reload'</code> (when the response is received).</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('draw');</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('draw');</code></dd>
+						</dl>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="chart" class="code">chart</h3>
+					<div class="section-content">
+						<p>This method gets the Google Charts Chart object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('chart');</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('chart');</code></dd>
+						</dl>
+						<h4>Returns</h4>
+						<p>The Chart object.</p>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="wrapper" class="code">wrapper</h3>
+					<div class="section-content">
+						<p>This method gets the Google Charts ChartWrapper object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('wrapper');</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('wrapper');</code></dd>
+						</dl>
+						<h4>Returns</h4>
+						<p>The ChartWrapper object.</p>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h2 id="advanced">Advanced Usage</h2>
+				<div class="section-content">
+					<h3 id="events">Events</h3>
+					<div class="section-content">
+						<p>The Ajax Chart plugin also features an interface for the Google Charts Library's Events. See their <a href="https://developers.google.com/chart/interactive/docs/events">documentation</a> for more information. Simply use jQuery's <code>.on()</code> function to bind the underlying Google Chart's <code>'select'</code>, <code>'ready'</code>, and <code>'error'</code> events using the <code>'achart.select'</code>, <code>'achart.ready'</code>, and <code>'achart.error'</code> event names, respectively. Note that the <code>'achart.select'</code> event's callback function will receive one extra parameter, which is an object specifying the current selection with the form: <code>{ row: ROWNUMBER, column: COLNUMBER }</code>.</p>
+						<h4 id="example-responding-to-selections">Example: Responding to Selections</h4>
+						<p>Here's an example of using the <code>'select'</code> event.</p>
+						<pre>$('#my-container').on('achart.select', function(event, selection) {&#10;    console.log(selection);&#10;});</pre>
+					</div>
+				</div>
+			</section>
+			<footer>
+				<p>Ajax Chart plugin &amp; documentation by Alex Furey</p>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -128,12 +128,12 @@
 				<div class="section-content">
 					<h3 id="setup">Setup</h3>
 					<p>Simply include the JavaScript file after including jQuery and the Google Charts library.</p>
-					<pre>&lt;script src="jQuery.min.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript"&gt;&#10;    google.charts.load('current', {packages: ['corechart']});&#10;&lt;/script&gt;&#10;&lt;script src="jquery.ajax-chart.js"&gt;</pre>
+					<pre>&lt;script src="jQuery.min.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"&gt;&lt;/script&gt;&#10;&lt;script type="text/javascript"&gt;&#10;    google.charts.load('current', {packages: ['corechart']});&#10;&lt;/script&gt;&#10;&lt;script src="jquery.ajax-chart.js"&gt;&lt;/script&gt;</pre>
 					<h3 id="on-load">On Load</h3>
 					<p>jQuery's normal on load event can sometimes fire before Google Charts is ready. To prevent this, use the <code>$.achart(...)</code> function.</p>
 					<pre>$.achart(function() {&#10;    //do chart initialization n stuff&#10;});</pre>
 					<h3 id="server-side">Server-Side</h3>
-					<p>You should have a script that returns a JSON object containing a valid Google Charts DataTable JSON object at the expected key (<code>'data'</code> by default). See the <a href="https://developers.google.com/chart/interactive/docs/reference#dataparam">Google Charts Documentation</a> for the exact structure of this object. Here's an example of JSON returned from a server-side script:</p>
+					<p>You should create a server-side script that returns a JSON object whose <code>'data'</code> key holds a valid Google Charts DataTable JSON object. See the <a href="https://developers.google.com/chart/interactive/docs/reference#dataparam">Google Charts Documentation</a> for the exact structure of the DataTable object. Here's an example of the JSON returned from a server-side script:</p>
 					<pre>{"data": {&#10;    "cols": [&#10;        { "label": "Dessert", "id": "dessert", "type": "string" },&#10;        { "label": "Count", "id": "count", "type": "number" }&#10;    ],&#10;    "rows": [&#10;        { "c": [ {"v": "Cake"}, {"v": 19} ] },&#10;        { "c": [ {"v": "Pie"}, {"v": 16} ] }&#10;    ]&#10;}}</pre>
 					<p>Feel free to add any extra data you want to the structure returned by your script. As long as the <code>'data'</code> key has a valid DataTable structure, you're good!</p>
 				</div>
@@ -141,7 +141,7 @@
 			<section>
 				<h2 id="methods">Methods</h2>
 				<p>Call methods like this: <code>$(containerSelector).achart(methodName, methodParameters);</code></p>
-				<p>Available methods are <code>'init'</code>, <code>'update'</code>, <code>'load'</code>, <code>'reload'</code>, <code>'draw'</code>, <code>'image'</code>, <code>'chart'</code>, and <code>'wrapper'</code>.
+				<p>Available methods are <code>'init'</code>, <code>'update'</code>, <code>'load'</code>, <code>'reload'</code>, <code>'draw'</code>, <code>'image'</code>, <code>'chart'</code>, <code>'wrapper'</code>, and <code>'verify'</code>.
 				<div class="section-content">
 					<h3 id="init" class="code">init</h3>
 					<div class="section-content">
@@ -381,7 +381,7 @@
 				<div class="section-content">
 					<h3 id="chart" class="code">chart</h3>
 					<div class="section-content">
-						<p>This method gets the Google Charts Chart object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
+						<p>This method returns the Google Charts Chart object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
 						<dl>
 							<dt>Usage</dt>
 							<dd><code>$(...).achart('chart');</code></dd>
@@ -395,7 +395,7 @@
 				<div class="section-content">
 					<h3 id="wrapper" class="code">wrapper</h3>
 					<div class="section-content">
-						<p>This method gets the Google Charts ChartWrapper object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
+						<p>This method returns the Google Charts ChartWrapper object that Ajax Chart uses behind the scenes. See the <a href="https://developers.google.com/chart/interactive/docs/reference#chartwrapper-class">documentation</a> for more information. This method is useful for those times when you need access to the underlying Google Charts technology.</p>
 						<dl>
 							<dt>Usage</dt>
 							<dd><code>$(...).achart('wrapper');</code></dd>
@@ -404,6 +404,20 @@
 						</dl>
 						<h4>Returns</h4>
 						<p>The ChartWrapper object.</p>
+					</div>
+				</div>
+				<div class="section-content">
+					<h3 id="verify" class="code">verify</h3>
+					<div class="section-content">
+						<p>Checks if the selected element has been intialized as an ajax chart. Returns <code>true</code> if it was and <code>false</code> otherwise.</p>
+						<dl>
+							<dt>Usage</dt>
+							<dd><code>$(...).achart('verify');</code></dd>
+							<dt>Example</dt>
+							<dd><code>$('#my-container').achart('verify');</code></dd>
+						</dl>
+						<h4>Returns</h4>
+						<p>A boolean indicating whether or not the element is an ajax chart.</p>
 					</div>
 				</div>
 			</section>

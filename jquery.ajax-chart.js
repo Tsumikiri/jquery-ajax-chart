@@ -1,24 +1,24 @@
 /**
  * @author Alex Furey
- * @version 1.2.6
+ * @version 1.2.7
  */
 
 (function($) {
 	
-	function getWrapper(element, params) {
+	function getWrapper(element) {
 		return $(element).data($.fn.achart.dataKeys.wrapper);
 	}
 	
-	function getChart(element, params) {
-		return getWrapper(element, params).getChart();
+	function getChart(element) {
+		return getWrapper(element).getChart();
 	}
 	
-	function getImage(element, params) {
-		return getChart(element, params).getImageURI();
+	function getImage(element) {
+		return getChart(element).getImageURI();
 	}
 	
-	function drawChart(element, params) {
-		getWrapper(element, params).draw();
+	function drawChart(element) {
+		getWrapper(element).draw();
 	}
 	
 	function forceID(element) {
@@ -94,6 +94,10 @@
 		return selection;
 	}
 	
+	function isChart(element) {
+		return $(element).data($.fn.achart.dataKeys.wrapper) instanceof google.visualization.ChartWrapper;
+	}
+	
 	$.fn.achart = function(action, a, b) {
 		if (action === 'wrapper') {
 			return getWrapper(this);
@@ -107,6 +111,8 @@
 			return reloadData(this, a, b);
 		} else if (action === 'select') {
 			return chartSelection(this, a);
+		} else if (action === 'verify') {
+			return isChart(this);
 		} else {
 			return this.each(function() {
 				if (action === 'draw') {
